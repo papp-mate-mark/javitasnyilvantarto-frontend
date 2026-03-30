@@ -33,9 +33,9 @@ export class UserTable {
   readonly pageOptionChanged = output<Pageable>();
   protected readonly userStore = inject(UserStore);
   protected readonly columns = [
-    new Column('id', 'ID', true),
-    new Column('name', 'Name', true),
-    new Column('username', 'Username', true),
+    new Column('id', $localize`:@@userTable.id:ID`, true),
+    new Column('name', $localize`:@@userTable.name:Name`, true),
+    new Column('username', $localize`:@@userTable.username:Username`, true),
   ];
 
   protected readonly rowActions = [
