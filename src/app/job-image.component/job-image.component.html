@@ -1,0 +1,29 @@
+<div class="flex flex-wrap gap-4">
+  @for (id of imageIds(); track id) {
+  <app-dynamic-skeleton [showSkeleton]="!!imageStore.thumbnailsLoading().get(id)" class="w-42">
+    <div class="aspect-square overflow-hidden rounded-md">
+      <p-image
+        [src]="imageStore.thumbnails().get(id)"
+        [preview]="true"
+        alt="Image"
+        (onShow)="loadFullImage(id)"
+        imageClass="object-cover"
+        class="block cursor-pointer"
+      >
+        <ng-template #indicator>
+          <i class="pi pi-search"></i>
+        </ng-template>
+
+        <ng-template #preview let-style="style">
+          <img
+            [src]="imageStore.images().get(id)"
+            [style]="style"
+            class="object-contain max-h-screen max-w-screen"
+            alt="image"
+          />
+        </ng-template>
+      </p-image>
+    </div>
+  </app-dynamic-skeleton>
+  }
+</div>

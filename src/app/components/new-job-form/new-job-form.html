@@ -1,0 +1,282 @@
+<div class="flex justify-center">
+  <div class="flex gap-4 max-md:w-screen">
+    <div class="flex flex-col gap-4 w-full">
+      <p-card i18n-header="@@newJobForm.customerTitle" header="Customer Information">
+        <div class="flex flex-col w-full gap-1">
+          <div class="flex gap-1">
+            <p-button
+              label="Clear selection"
+              i18n-label="@@newJobForm.clearSelectionButton"
+              [disabled]="!personSelected() || personStore.personUploadLoading()"
+              (click)="clearSelection()"
+            />
+            <p-button
+              [label]="selectPersonButtonLabel()"
+              [disabled]="
+                !personStore.personSearch().totalElements ||
+                personStore.personSearchLoading() ||
+                !!personSelected() ||
+                personStore.personUploadLoading()
+              "
+              [classList]="'md:hidden'"
+              (click)="personSelectorDialogVisible.set(true)"
+            />
+          </div>
+          <app-text-input
+            id="customerName"
+            label="Customer Name"
+            [fluid]="true"
+            controlName="nameControl"
+            [parentGroup]="customerParentGroup"
+            [disabled]="!!personSelected()"
+            [isLoading]="personStore.personUploadLoading()"
+            i18n-label="@@newJobForm.customerNameLabel"
+            (searchChanged)="handleChange($event, 'name')"
+          />
+          <app-text-input
+            id="address"
+            [fluid]="true"
+            label="Address"
+            controlName="addressControl"
+            [disabled]="!!personSelected()"
+            [isLoading]="personStore.personUploadLoading()"
+            [parentGroup]="customerParentGroup"
+            i18n-label="@@newJobForm.addressLabel"
+            (searchChanged)="handleChange($event, 'address')"
+          />
+          <app-text-input
+            id="phoneNumber"
+            [fluid]="true"
+            label="Phone Number"
+            controlName="phoneControl"
+            [disabled]="!!personSelected()"
+            [isLoading]="personStore.personUploadLoading()"
+            [parentGroup]="customerParentGroup"
+            i18n-label="@@newJobForm.phoneNumberLabel"
+            (searchChanged)="handleChange($event, 'phone')"
+          />
+        </div>
+      </p-card>
+      @for (jobParentGroup of customerParentGroup.controls.jobs.controls; track $index) {
+        <p-card>
+          <ng-template #title i18n="@@newJobForm.jobTitle">
+            <div class="flex justify-between">
+              <div>Job Information</div>
+              <div class="flex justify-end">
+                <p-button
+                  (onClick)="clearJob(jobParentGroup)"
+                  [disabled]="
+                    customerParentGroup.controls.jobs.controls.length === 1 ||
+                    personStore.personUploadLoading()
+                  "
+                >
+                  <ng-icon name="tablerX" />
+                </p-button>
+              </div>
+            </div>
+          </ng-template>
+          <div class="flex flex-col gap-1">
+            <app-text-input
+              [id]="`object_${$index}`"
+              [fluid]="true"
+              label="Object"
+              controlName="objectControl"
+              [parentGroup]="jobParentGroup"
+              [isLoading]="personStore.personUploadLoading()"
+              i18n-label="@@newJobForm.objectLabel"
+            />
+            <app-textarea
+              [id]="`objectDescription_${$index}`"
+              [fluid]="true"
+              label="Job Description"
+              controlName="descriptionControl"
+              [parentGroup]="jobParentGroup"
+              [isLoading]="personStore.personUploadLoading()"
+              i18n-label="@@newJobForm.jobDescriptionLabel"
+            />
+            <app-text-input
+              [id]="`material_${$index}`"
+              [fluid]="true"
+              label="Material"
+              controlName="materialControl"
+              [parentGroup]="jobParentGroup"
+              [isLoading]="personStore.personUploadLoading()"
+              i18n-label="@@newJobForm.materialLabel"
+            />
+            <app-number-input
+              [id]="`weight_${$index}`"
+              [fluid]="true"
+              label="Weight (gr)"
+              fieldClasses="w-full"
+              controlName="weightControl"
+              [isInteger]="false"
+              [parentGroup]="jobParentGroup"
+              [isLoading]="personStore.personUploadLoading()"
+              i18n-label="@@newJobForm.weightLabel"
+            />
+            <app-price-input
+              fieldClasses="w-full"
+              [id]="`minPrice_${$index}`"
+              [fluid]="true"
+              label="Minimum Price"
+              controlName="priceMinControl"
+              [parentGroup]="jobParentGroup"
+              [isLoading]="personStore.personUploadLoading()"
+              i18n-label="@@newJobForm.minPriceLabel"
+            />
+            <app-price-input
+              [id]="`maxPrice_${$index}`"
+              [fluid]="true"
+              label="Maximum Price"
+              controlName="priceMaxControl"
+              [parentGroup]="jobParentGroup"
+              [isLoading]="personStore.personUploadLoading()"
+              i18n-label="@@newJobForm.maxPriceLabel"
+            />
+            <app-picture-upload
+              [id]="`beforeImages_${$index}`"
+              formControlName="beforeImagesControl"
+              [parentGroup]="jobParentGroup"
+              label="Images before repair"
+              i18n-label="@@newJobForm.beforeImagesLabel"
+              controlName="beforeImagesControl"
+            />
+            <p-accordion
+              (onOpen)="onAccordionPanelChange($index, true)"
+              (onClose)="onAccordionPanelChange($index, false)"
+            >
+              <p-accordion-panel value="0">
+                <p-accordion-header i18n="@@newJobForm.extraDetailsTitle"
+                  >Extra details</p-accordion-header
+                >
+                <p-accordion-content>
+                  <div class="flex flex-col gap-1">
+                    <app-text-input
+                      [id]="`uploadNote_${$index}`"
+                      [fluid]="true"
+                      label="Upload Note"
+                      controlName="uploadNoteControl"
+                      [parentGroup]="jobParentGroup"
+                      [isLoading]="personStore.personUploadLoading()"
+                      i18n-label="@@newJobForm.uploadNoteLabel"
+                      [disabled]="!extraDetailsOpen()[$index]"
+                    />
+                    <app-date-picker
+                      [id]="`finishDate_${$index}`"
+                      [fluid]="true"
+                      label="Finish Date"
+                      controlName="doneDateControl"
+                      [parentGroup]="jobParentGroup"
+                      [isLoading]="personStore.personUploadLoading()"
+                      i18n-label="@@newJobForm.finishDateLabel"
+                      [disabled]="!extraDetailsOpen()[$index]"
+                    />
+                    <app-text-input
+                      [id]="`finishNote_${$index}`"
+                      [fluid]="true"
+                      label="Finish Note"
+                      controlName="finishNoteControl"
+                      [parentGroup]="jobParentGroup"
+                      [isLoading]="personStore.personUploadLoading()"
+                      i18n-label="@@newJobForm.finishNoteLabel"
+                      [disabled]="!extraDetailsOpen()[$index]"
+                    />
+                    <app-date-picker
+                      [id]="`pickupDate_${$index}`"
+                      [fluid]="true"
+                      label="Pickup Date"
+                      controlName="pickupDateControl"
+                      [parentGroup]="jobParentGroup"
+                      [isLoading]="personStore.personUploadLoading()"
+                      i18n-label="@@newJobForm.pickupDateLabel"
+                      [disabled]="!extraDetailsOpen()[$index]"
+                    />
+                    <app-price-input
+                      [id]="`finalPrice_${$index}`"
+                      [fluid]="true"
+                      label="Final Price"
+                      controlName="finalPriceControl"
+                      [parentGroup]="jobParentGroup"
+                      [isLoading]="personStore.personUploadLoading()"
+                      i18n-label="@@newJobForm.finalPriceLabel"
+                      [disabled]="!extraDetailsOpen()[$index]"
+                    />
+                    <app-picture-upload
+                      [id]="`afterImages_${$index}`"
+                      [parentGroup]="jobParentGroup"
+                      label="Images after repair"
+                      i18n-label="@@newJobForm.afterImagesLabel"
+                      controlName="afterImagesControl"
+                      [disabled]="!extraDetailsOpen()[$index]"
+                    />
+                  </div>
+                </p-accordion-content>
+              </p-accordion-panel>
+            </p-accordion>
+          </div>
+        </p-card>
+      }
+      <p-card>
+        <div class="flex flex-col gap-1">
+          <app-date-picker
+            id="uploadDate"
+            [fluid]="true"
+            label="Upload Date"
+            controlName="uploadDateControl"
+            [isLoading]="personStore.personUploadLoading()"
+            [parentGroup]="customerParentGroup"
+            i18n-label="@@newJobForm.uploadDateLabel"
+          />
+          <app-date-picker
+            id="deadline"
+            [fluid]="true"
+            label="Deadline"
+            controlName="deadLineControl"
+            [isLoading]="personStore.personUploadLoading()"
+            [parentGroup]="customerParentGroup"
+            i18n-label="@@newJobForm.deadlineLabel"
+          />
+        </div>
+        <div class="mt-8 flex gap-4">
+          <p-button
+            type="button"
+            label="Add Job"
+            class="p-button-secondary"
+            (click)="addJob()"
+            i18n-label="@@newJobForm.addJobButton"
+            [disabled]="personStore.personUploadLoading()"
+          />
+          <p-button
+            type="button"
+            label="Submit"
+            class="p-button-primary"
+            (click)="submitForm()"
+            i18n-label="@@newJobForm.submitButton"
+            [disabled]="personStore.personUploadLoading()"
+          />
+        </div>
+      </p-card>
+    </div>
+    <div class="max-md:hidden">
+      <p-card i18n-header="@@newJobForm.personSearchTitle" header="Person Search">
+        <app-person-search-table
+          [disabled]="!!personSelected()"
+          (pageOptionsChange)="pageOptionsChanged($event)"
+          [rowActions]="rowActions"
+        />
+      </p-card>
+    </div>
+  </div>
+</div>
+
+<app-dialog
+  [(dialogVisible)]="personSelectorDialogVisible"
+  dialogTitle="Select Person"
+  i18n-dialogTitle="@@newJobForm.personSelectionDialogTitle"
+>
+  <app-person-search-table
+    [disabled]="!!personSelected()"
+    (pageOptionsChange)="pageOptionsChanged($event)"
+    [rowActions]="popupRowActions"
+  />
+</app-dialog>

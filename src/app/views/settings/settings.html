@@ -1,0 +1,12 @@
+<div class="flex flex-col gap-4">
+  <app-settings-filter (searchChanged)="searchChanged($event)" />
+  <app-settings-table
+    (editPressed)="editPressed($event)"
+    (pageOptionsChange)="pageOptionsChanged($event)"
+  />
+</div>
+<app-settings-dialog
+  [settingToEdit]="settingsToEdit()"
+  [(dialogVisible)]="dialogVisible"
+  (settingsUpdated)="fetch()"
+/>

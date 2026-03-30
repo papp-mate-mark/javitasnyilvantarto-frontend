@@ -1,0 +1,22 @@
+<div class="grid gap-1" [formGroup]="parentGroup()">
+  <app-dynamic-skeleton [showSkeleton]="isLoading()">
+    <label [for]="id()">{{ label() }}</label>
+  </app-dynamic-skeleton>
+  <app-dynamic-skeleton [showSkeleton]="isLoading()">
+    <p-inputnumber
+      (onFocus)="onInputFocus($event)"
+      [fluid]="fluid()"
+      [id]="id()"
+      appScrollIntoViewOnFocus
+      [formControlName]="controlName()"
+      [inputStyleClass]="fieldClasses()"
+      [minFractionDigits]="0"
+      [maxFractionDigits]="isInteger() ? 0 : 5"
+    />
+  </app-dynamic-skeleton>
+  <app-validation-feedback
+    [parentGroup]="parentGroup()"
+    [controlName]="controlName()"
+    [class.hidden]="isLoading()"
+  />
+</div>

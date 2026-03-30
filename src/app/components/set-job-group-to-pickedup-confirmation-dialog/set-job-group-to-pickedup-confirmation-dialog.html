@@ -1,0 +1,20 @@
+<app-submit-dialog
+  [(dialogVisible)]="dialogVisible"
+  i18n-dialogTitle="@@setJobGroupToPickedupConfirmationDialog.title"
+  dialogTitle='The fallowing jobs are in one group, do you want to set all of them to "picked up"?'
+  (savePressed)="submitted()"
+  width="35rem"
+>
+  <div class="flex flex-col gap-4">
+    <app-data-table [columns]="columns" [data]="jobs()"></app-data-table>
+    <app-date-picker
+      id="pickedUpDate"
+      controlName="pickedUpDateControl"
+      i18n-label="@@setToPickedUpDialog.pickedUpDate"
+      label="Pickup date"
+      [parentGroup]="parentGroup"
+      [fluid]="true"
+    >
+    </app-date-picker>
+  </div>
+</app-submit-dialog>

@@ -1,0 +1,26 @@
+<div class="grid gap-1" [formGroup]="parentGroup()">
+  <app-dynamic-skeleton [showSkeleton]="isLoading()">
+    <label [for]="id()">{{ label() }}</label>
+  </app-dynamic-skeleton>
+  <app-dynamic-skeleton [showSkeleton]="isLoading()">
+    <textarea
+      [fluid]="fluid()"
+      type="text"
+      [id]="id()"
+      [formControlName]="controlName()"
+      [class]="fieldClasses()"
+      pTextarea
+      appScrollIntoViewOnFocus
+      [style]="{ 'field-sizing': 'content', resize: 'none' }"
+    ></textarea>
+    <!-- 
+    field-sizing setting is a temporary fix because autoResize directive triggers random scrolling. 
+    TODO: When migrating to PrimeNG 21, use autoResize directive since it got fixed in it 
+    -->
+  </app-dynamic-skeleton>
+  <app-validation-feedback
+    [parentGroup]="parentGroup()"
+    [controlName]="controlName()"
+    [class.hidden]="isLoading()"
+  />
+</div>

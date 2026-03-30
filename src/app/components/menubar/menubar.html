@@ -1,0 +1,26 @@
+<div class="w-full shadow-md">
+  <p-menubar [model]="menuItems" class="rounded-none">
+    <ng-template pTemplate="end">
+      <div class="flex gap-4">
+        <div class="p-menubar-link m-auto">
+          <app-dark-mode-selector
+            [parentGroup]="parentGroup"
+            controlName="darkModeControl"
+            id="darkModeSwitch"
+          />
+        </div>
+        <p-button
+          type="button"
+          i18n-label="@@menubar.logout"
+          label="Logout"
+          class="p-button-text text-gray-700 hover:text-red-500 transition"
+          (click)="logout()"
+        />
+      </div>
+    </ng-template>
+  </p-menubar>
+</div>
+
+<div class="p-4">
+  <router-outlet></router-outlet>
+</div>

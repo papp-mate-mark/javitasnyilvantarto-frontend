@@ -1,0 +1,20 @@
+@media (max-width: 767px) {
+  .lastTd {
+    border-bottom-width: 1px;
+    border-bottom-color: #999999;
+    width: 100%;
+  }
+  .topBorder {
+    border-top-width: 1px;
+    border-top-color: #999999;
+  }
+}
+
+.lastTdEnforced {
+  border-bottom-width: 1px;
+  border-bottom-color: #999999;
+}
+.topBorderEnforced {
+  border-top-width: 1px;
+  border-top-color: #999999;
+}

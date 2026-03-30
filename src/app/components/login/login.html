@@ -1,0 +1,21 @@
+<div class="w-full h-screen flex flex-col items-center justify-start mt-[10vh]">
+  <div class="gap-2 flex flex-col h-fit w-fit justify-start">
+    <app-text-input
+      id="username"
+      controlName="usernameControl"
+      label="Username"
+      [parentGroup]="parentGroup"
+      fieldClasses="w-60"
+      i18n-label="@@login.username"
+    />
+    <app-password-input
+      id="password"
+      controlName="passwordControl"
+      [parentGroup]="parentGroup"
+      label="Password"
+      fieldClasses="w-60"
+      i18n-label="@@login.password"
+    />
+    <p-button (onClick)="submit()" i18n="@@login.loginbutton">Login</p-button>
+  </div>
+</div>

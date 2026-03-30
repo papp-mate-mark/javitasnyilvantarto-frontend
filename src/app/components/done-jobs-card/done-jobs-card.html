@@ -1,0 +1,25 @@
+<p-card i18n-header="@@doneJobs.title" header="Finished jobs">
+  <div class="flex flex-col gap-4">
+    <!-- prettier-ignore -->
+    <span i18n="@@doneJobs.doneJobCountLabel">
+    {doneJobs().length, plural,
+      =0 {There are no jobs ready for pickup}
+      =1 {There is 1 job ready for pickup}
+      other {There are {{doneJobs().length}} jobs ready for pickup}
+    }
+    </span>
+    <app-data-table [columns]="doneCols" [data]="doneJobs()" [rowActions]="rowActions">
+      <ng-template #finalPrice let-data>{{ data.finalPrice | price }}</ng-template>
+      <ng-template #finishDate let-data>{{ formatDate(data.finishDate) }}</ng-template>
+      <ng-template #upload let-data>{{ formatDate(data.upload) }}</ng-template>
+    </app-data-table>
+  </div>
+</p-card>
+<app-set-to-picked-up-dialog
+  [(dialogVisible)]="singleSetToDoneDialogVisible"
+  [job]="selectedJob()"
+/>
+<app-set-job-group-to-pickedup-confirmation-dialog
+  [(dialogVisible)]="multipleSetToDoneDialogVisible"
+  [jobs]="jobsInGroup()"
+/>

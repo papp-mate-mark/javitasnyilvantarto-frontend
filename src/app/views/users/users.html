@@ -1,0 +1,19 @@
+<div class="flex flex-col gap-4">
+  <app-user-filter
+    (filterChanged)="handleFilterChange($event)"
+    (newUserCreatePressed)="createNewUser()"
+  />
+  <app-user-table
+    (editPressed)="editUser($event)"
+    (deletePressed)="deleteUser($event)"
+    (resetPressed)="resetUserPassword($event)"
+    (pageOptionChanged)="changePageOptions($event)"
+  />
+</div>
+<app-user-modification-dialog
+  (userSaved)="fetchUsers()"
+  [(dialogVisible)]="dialogVisible"
+  [userToModify]="userToModify()"
+  (passwordGenerated)="showPassword($event)"
+/>
+<app-new-password-dialog [(dialogVisible)]="passwordDialogVisible" [password]="generatedPass()" />

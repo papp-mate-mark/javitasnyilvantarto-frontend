@@ -1,0 +1,22 @@
+<div class="grid" [formGroup]="parentGroup()">
+  <app-dynamic-skeleton [showSkeleton]="isLoading()">
+    <label [for]="id()">{{ label() }}</label>
+  </app-dynamic-skeleton>
+  <app-dynamic-skeleton class="mt-1" [showSkeleton]="isLoading()">
+    <p-date-picker
+      selectionMode="range"
+      [id]="id()"
+      [fluid]="fluid()"
+      [formControlName]="controlName()"
+      [inputStyleClass]="fieldClasses()"
+      appendTo="body"
+      dateFormat="yy. mm. dd."
+      [showIcon]="true"
+    />
+  </app-dynamic-skeleton>
+  <app-validation-feedback
+    [parentGroup]="parentGroup()"
+    [controlName]="controlName()"
+    [class.hidden]="isLoading()"
+  />
+</div>

@@ -1,0 +1,17 @@
+<app-submit-dialog
+  [(dialogVisible)]="dialogVisible"
+  dialogTitle="Edit setting"
+  i18n-dialogTitle="@@settings.dialog.title"
+  (savePressed)="save()"
+  [saveDisabled]="settingsStore.settingsLoading()"
+  (shown)="loadInititalValue()"
+>
+  <app-textarea
+    id="valueField"
+    controlName="valueControl"
+    [parentGroup]="parentGroup"
+    label="Value"
+    [fluid]="true"
+    i18n-label="@@settings.dialog.valueLabel"
+  />
+</app-submit-dialog>

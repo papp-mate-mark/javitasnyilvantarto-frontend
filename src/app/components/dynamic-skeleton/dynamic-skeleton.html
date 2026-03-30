@@ -1,0 +1,10 @@
+<div style="position: relative; display: inline-block" class="w-full">
+  <div class="dynamic-skeleton-content" [style.visibility]="showSkeleton() ? 'hidden' : 'visible'">
+    <ng-content />
+  </div>
+  @if (showSkeleton()) {
+    <div style="position: absolute; height: 100%; width: 100%; top: 0; right: 0">
+      <p-skeleton height="100%" width="100%"></p-skeleton>
+    </div>
+  }
+</div>

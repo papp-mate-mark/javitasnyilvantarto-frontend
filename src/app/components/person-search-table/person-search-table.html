@@ -1,0 +1,12 @@
+<p-card>
+  <app-data-table
+    [columns]="columns"
+    [data]="personStore.personSearch()"
+    [paginated]="true"
+    [disabled]="disabled()"
+    [isLoading]="personStore.personSearchLoading()"
+    (pageOptionsChange)="emitPageOptionsChanged($event)"
+    [rowActions]="rowActions()"
+    [pageButtonCount]="1"
+  />
+</p-card>

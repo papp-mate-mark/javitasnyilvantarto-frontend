@@ -1,0 +1,140 @@
+<p-card>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <app-text-input
+      id="nameField"
+      controlName="nameSearchControl"
+      [parentGroup]="parentGroup"
+      [fluid]="true"
+      label="Name"
+      i18n-label="@@jobSearch.nameLabel"
+      (searchChanged)="handleChange($event, 'name')"
+    />
+    <app-text-input
+      id="descriptionField"
+      controlName="descriptionSearchControl"
+      [fluid]="true"
+      [parentGroup]="parentGroup"
+      label="Description"
+      i18n-label="@@jobSearch.descriptionLabel"
+      (searchChanged)="handleChange($event, 'description')"
+    />
+    <app-text-input
+      id="objectField"
+      controlName="objectSearchControl"
+      [parentGroup]="parentGroup"
+      [fluid]="true"
+      label="Object"
+      i18n-label="@@jobSearch.objectLabel"
+      (searchChanged)="handleChange($event, 'objectname')"
+    />
+  </div>
+  <p-accordion>
+    <p-accordion-panel value="0">
+      <p-accordion-header i18n="@@jobSearch.moreSearchOptionsTitle">
+        More options
+      </p-accordion-header>
+      <p-accordion-content>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+          <app-date-range-picker
+            id="uploadDateRangeField"
+            controlName="uploadDateRangeControl"
+            [parentGroup]="parentGroup"
+            [fluid]="true"
+            label="Upload Date Range"
+            i18n-label="@@jobSearch.uploadDateRangeLabel"
+            (searchChanged)="handleDateRangeChange($event, 'uploadstart', 'uploadend')"
+          />
+          <app-text-input
+            id="addressField"
+            controlName="addressControl"
+            [parentGroup]="parentGroup"
+            label="Address"
+            [fluid]="true"
+            i18n-label="@@jobSearch.addressLabel"
+            (searchChanged)="handleChange($event, 'address')"
+          />
+          <app-text-input
+            id="phoneField"
+            controlName="phoneControl"
+            [parentGroup]="parentGroup"
+            [fluid]="true"
+            label="Phone"
+            i18n-label="@@jobSearch.phoneLabel"
+            (searchChanged)="handleChange($event, 'phone')"
+          />
+          <app-text-input
+            id="materialField"
+            controlName="materialControl"
+            [parentGroup]="parentGroup"
+            [fluid]="true"
+            label="Material"
+            i18n-label="@@jobSearch.materialLabel"
+            (searchChanged)="handleChange($event, 'material')"
+          />
+          <app-text-input
+            id="uploadNoteField"
+            controlName="uploadNoteControl"
+            [parentGroup]="parentGroup"
+            [fluid]="true"
+            label="Upload Note"
+            i18n-label="@@jobSearch.uploadNoteLabel"
+            (searchChanged)="handleChange($event, 'uploadnote')"
+          />
+          <app-text-input
+            id="doneNoteField"
+            controlName="doneNoteControl"
+            [parentGroup]="parentGroup"
+            [fluid]="true"
+            label="Done Note"
+            i18n-label="@@jobSearch.doneNoteLabel"
+            (searchChanged)="handleChange($event, 'donenote')"
+          />
+          <app-number-input
+            id="finalPriceMinField"
+            controlName="finalPriceMinControl"
+            [parentGroup]="parentGroup"
+            [fluid]="true"
+            label="Final Price Min"
+            i18n-label="@@jobSearch.finalPriceMinLabel"
+            (searchChanged)="handleChange($event, 'finalpricemin')"
+          />
+          <app-number-input
+            id="finalPriceMaxField"
+            controlName="finalPriceMaxControl"
+            [parentGroup]="parentGroup"
+            [fluid]="true"
+            label="Final Price Max"
+            i18n-label="@@jobSearch.finalPriceMaxLabel"
+            (searchChanged)="handleChange($event, 'finalpricemax')"
+          />
+          <app-number-input
+            id="weightMinField"
+            controlName="weightMinControl"
+            [parentGroup]="parentGroup"
+            [fluid]="true"
+            label="Weight Min"
+            i18n-label="@@jobSearch.weightMinLabel"
+            (searchChanged)="handleChange($event, 'weightmin')"
+          />
+          <app-number-input
+            id="weightMaxField"
+            controlName="weightMaxControl"
+            [parentGroup]="parentGroup"
+            [fluid]="true"
+            label="Weight Max"
+            i18n-label="@@jobSearch.weightMaxLabel"
+            (searchChanged)="handleChange($event, 'weightmax')"
+          />
+          <app-checkbox-input
+            id="onlyWithPhotosField"
+            controlName="onlyWithPhotosControl"
+            [parentGroup]="parentGroup"
+            label="Only with photos"
+            i18n-label="@@jobSearch.onlyWithPhotosLabel"
+            (searchChanged)="handleChange($event, 'onlywithphotos')"
+          />
+        </div>
+      </p-accordion-content>
+    </p-accordion-panel>
+  </p-accordion>
+</p-card>

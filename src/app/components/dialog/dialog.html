@@ -1,0 +1,15 @@
+<p-dialog
+  [(visible)]="dialogVisible"
+  [modal]="true"
+  [focusOnShow]="false"
+  class="w-fit"
+  (onShow)="shown.emit()"
+  (onHide)="hidden.emit()"
+>
+  <ng-template #header>
+    <h2 class="text-xl font-semibold">
+      {{ dialogTitle() }}
+    </h2>
+  </ng-template>
+  <ng-content />
+</p-dialog>

@@ -1,0 +1,19 @@
+<p-dialog
+  [(visible)]="dialogVisible"
+  [modal]="true"
+  [style]="{ width: width(), maxWidth: 'calc(100vw - 2rem)' }"
+  [focusOnShow]="false"
+  (onShow)="shown.emit()"
+  (onHide)="hidden.emit()"
+>
+  <ng-template #header>
+    <h2 class="text-xl font-semibold submit-dialog__title">
+      {{ dialogTitle() }}
+    </h2>
+  </ng-template>
+  <ng-content />
+  <ng-template #footer>
+    <p-button [label]="cancelText()" severity="secondary" (click)="cancel()" />
+    <p-button [label]="saveText()" severity="primary" (click)="savePressed.emit()" />
+  </ng-template>
+</p-dialog>

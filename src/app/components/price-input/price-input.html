@@ -1,0 +1,26 @@
+<div class="grid gap-1" [formGroup]="parentGroup()">
+  <app-dynamic-skeleton [showSkeleton]="isLoading()">
+    <label [for]="id()">{{ label() }}</label>
+  </app-dynamic-skeleton>
+  <app-dynamic-skeleton [showSkeleton]="isLoading()">
+    <p-inputnumber
+      (onFocus)="onInputFocus($event)"
+      [id]="id()"
+      [fluid]="fluid()"
+      [formControlName]="controlName()"
+      [inputStyleClass]="fieldClasses()"
+      [locale]="locale"
+      mode="currency"
+      currencyDisplay="symbol"
+      currency="HUF"
+      [min]="0"
+      [minFractionDigits]="0"
+      [maxFractionDigits]="0"
+    />
+  </app-dynamic-skeleton>
+  <app-validation-feedback
+    [parentGroup]="parentGroup()"
+    [controlName]="controlName()"
+    [class.hidden]="isLoading()"
+  />
+</div>

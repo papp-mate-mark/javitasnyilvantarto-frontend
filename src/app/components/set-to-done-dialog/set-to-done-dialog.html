@@ -1,0 +1,38 @@
+<app-submit-dialog
+  [(dialogVisible)]="dialogVisible"
+  [dialogTitle]="dialogTitle()"
+  (savePressed)="submit()"
+>
+  <app-date-picker
+    id="finishDate"
+    [fluid]="true"
+    controlName="finishDateControl"
+    i18n-label="@@setToDoneDialog.finishDate"
+    label="Finish date"
+    [parentGroup]="parentGroup"
+  >
+  </app-date-picker>
+  <app-price-input
+    id="finalPrice"
+    [fluid]="true"
+    controlName="finalPriceControl"
+    i18n-label="@@setToDoneDialog.finalPrice"
+    label="Final price"
+    [parentGroup]="parentGroup"
+  />
+  <app-text-input
+    id="note"
+    [fluid]="true"
+    controlName="noteControl"
+    i18n-label="@@setToDoneDialog.note"
+    label="Note"
+    [parentGroup]="parentGroup"
+  />
+  <app-picture-upload
+    id="pictureUpload"
+    [parentGroup]="parentGroup"
+    controlName="pictureUploadControl"
+    i18n-label="@@setToDoneDialog.picture"
+    label="Picture"
+  />
+</app-submit-dialog>

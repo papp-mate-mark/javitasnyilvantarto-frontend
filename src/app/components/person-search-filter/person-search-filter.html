@@ -1,0 +1,31 @@
+<p-card>
+  <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <app-text-input
+      id="nameSearchField"
+      controlName="nameSearchControl"
+      [parentGroup]="parentGroup"
+      [fluid]="true"
+      label="Name"
+      i18n-label="@@personSearchFilter.nameLabel"
+      (searchChanged)="nameChanged($event)"
+    />
+    <app-text-input
+      id="addressSearchField"
+      controlName="addressSearchControl"
+      [parentGroup]="parentGroup"
+      [fluid]="true"
+      label="Address"
+      i18n-label="@@personSearchFilter.addressLabel"
+      (searchChanged)="addressChanged($event)"
+    />
+    <app-text-input
+      id="phoneSearchField"
+      controlName="phoneSearchControl"
+      [parentGroup]="parentGroup"
+      [fluid]="true"
+      label="Phone"
+      i18n-label="@@personSearchFilter.phoneLabel"
+      (searchChanged)="phoneChanged($event)"
+    />
+  </div>
+</p-card>

@@ -1,0 +1,20 @@
+<div class="mt-6 grid gap-1" [formGroup]="parentGroup()">
+    <div class="flex items-center gap-2">
+        <app-dynamic-skeleton [showSkeleton]="isLoading()">
+            <p-checkbox
+          [inputId]="id()"
+          [binary]="true"
+            [formControlName]="controlName()"
+            [class]="fieldClasses()"
+            />
+        </app-dynamic-skeleton>
+        <app-dynamic-skeleton [showSkeleton]="isLoading()">
+            <label [for]="id()">{{ label() }}</label>
+        </app-dynamic-skeleton>
+    </div>
+  <app-validation-feedback
+    [parentGroup]="parentGroup()"
+    [controlName]="controlName()"
+    [class.hidden]="isLoading()"
+  />
+</div>
