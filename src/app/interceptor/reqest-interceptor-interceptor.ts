@@ -8,7 +8,7 @@ import {
   selectCurrentUser,
 } from '../state/current-user.selector';
 import { catchError, EMPTY, switchMap, throwError } from 'rxjs';
-import { environment } from '../../envirements/envirements';
+import { environment } from '../../environments/environment';
 
 export const requestInterceptor: HttpInterceptorFn = (req, next) => {
   const store = inject(Store);

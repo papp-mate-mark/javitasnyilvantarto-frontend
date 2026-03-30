@@ -4,7 +4,7 @@ import ErrorMessage from '../model/error-message';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { catchError, Observable } from 'rxjs';
-import { environment } from '../../envirements/envirements';
+import { environment } from '../../environments/environment';
 import { AppMessageService } from './app-message.service';
 import { ErrorTypes } from '../model/enums/error-types';
 import { ErrorResponse } from '../model/error-response';

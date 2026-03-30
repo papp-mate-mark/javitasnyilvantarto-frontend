@@ -3,7 +3,7 @@
 /out-tsc
 /bazel-out
 
-src/envirements/environment.prod.ts
+src/environments/environment.prod.ts
 
 # Node
 /node_modules

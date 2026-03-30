@@ -13,7 +13,7 @@ import {
 } from '../state/current-user.selector';
 import CurrentUser from '../model/current-user';
 import { MessageService } from 'primeng/api';
-import { environment } from '../../envirements/envirements';
+import { environment } from '../../environments/environment';
 import { CurrentUserApiActions } from '../state/current-user.actions';
 
 const TEST_URL = 'https://api.example.com/test';

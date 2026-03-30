@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import LoginRequest from '../model/login-request';
-import { environment } from '../../envirements/envirements';
+import { environment } from '../../environments/environment';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { CurrentUserApiActions } from '../state/current-user.actions';
@@ -27,9 +27,9 @@ export class AuthenticationService {
       environment.LOGIN_ENDPOINT,
       new ErrorMessage(
         $localize`:@@loginFailed.title:Login failed`,
-        $localize`:@@loginFailed.message:Incorrect username or password`
+        $localize`:@@loginFailed.message:Incorrect username or password`,
       ),
-      request
+      request,
     );
   }
 
@@ -43,14 +43,14 @@ export class AuthenticationService {
         environment.REFRESH_ENDPOINT,
         new ErrorMessage(
           this.TITLE,
-          $localize`:@@auth.refreshFailed:Requesting refresh token failed`
+          $localize`:@@auth.refreshFailed:Requesting refresh token failed`,
         ),
-        refreshToken
+        refreshToken,
       )
       .pipe(
         map((response) => {
           this.store.dispatch(
-            CurrentUserApiActions.retrievedCurrentUser({ loginResponse: response })
+            CurrentUserApiActions.retrievedCurrentUser({ loginResponse: response }),
           );
 
           return response;
@@ -58,7 +58,7 @@ export class AuthenticationService {
         finalize(() => {
           this.refreshRequest = null;
         }),
-        shareReplay({ bufferSize: 1, refCount: false })
+        shareReplay({ bufferSize: 1, refCount: false }),
       );
 
     return this.refreshRequest;
@@ -71,9 +71,9 @@ export class AuthenticationService {
         '/auth/logout',
         new ErrorMessage(
           $localize`:@@logoutFailed.title:Logout failed`,
-          $localize`:@@logoutFailed.message:Sending logout request failed`
+          $localize`:@@logoutFailed.message:Sending logout request failed`,
         ),
-        currentUser.refreshToken
+        currentUser.refreshToken,
       )
       .subscribe(() => {
         this.clearTokenAndRedirect();
