@@ -5,4 +5,5 @@ export enum Severity {
   DANGER = 'danger',
   SECONDARY = 'secondary',
   CONTRAST = 'contrast',
+  PRIMARY = 'primary',
 }

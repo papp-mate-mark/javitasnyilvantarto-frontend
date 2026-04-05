@@ -1,20 +1,45 @@
-<app-submit-dialog
+<app-dialog
   [(dialogVisible)]="dialogVisible"
   i18n-dialogTitle="@@setJobGroupToPickedupConfirmationDialog.title"
   dialogTitle='The fallowing jobs are in one group, do you want to set all of them to "picked up"?'
-  (savePressed)="submitted()"
   width="35rem"
+  (hidden)="clearData()";
 >
   <div class="flex flex-col gap-4">
-    <app-data-table [columns]="columns" [data]="jobs()"></app-data-table>
-    <app-date-picker
-      id="pickedUpDate"
-      controlName="pickedUpDateControl"
-      i18n-label="@@setToPickedUpDialog.pickedUpDate"
-      label="Pickup date"
-      [parentGroup]="parentGroup"
-      [fluid]="true"
-    >
-    </app-date-picker>
+    <div class="flex flex-col gap-4">
+      <app-data-table [columns]="columns" [data]="jobs()"></app-data-table>
+      <app-date-picker
+        id="pickedUpDate"
+        controlName="pickedUpDateControl"
+        i18n-label="@@setToPickedUpDialog.pickedUpDate"
+        label="Pickup date"
+        [parentGroup]="parentGroup"
+        [fluid]="true"
+      >
+      </app-date-picker>
+    </div>
+    <div class="flex gap-2 justify-end">
+      <p-button 
+        label="Close"
+        [severity]="closeSeverity"
+        (click)="dialogVisible.set(false)"
+        i18n-label="@@setToPickedUpDialog.closeButton"
+        [disabled]="isSaving()"
+        />
+      <p-button 
+        label="Save only one"
+        [severity]="saveOneSeverity"
+        (click)="submitOne()"
+        i18n-label="@@setToPickedUpDialog.saveButton"
+        [disabled]="isSaving()"
+        />
+      <p-button 
+        label="Save all"
+        [severity]="saveAllSeverity"
+        (click)="submitAll()"
+        i18n-label="@@setToPickedUpDialog.saveAllButton"
+        [disabled]="isSaving()"
+        />
+    </div>
   </div>
-</app-submit-dialog>
+</app-dialog>

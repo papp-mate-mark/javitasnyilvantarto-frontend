@@ -241,7 +241,7 @@
           <p-button
             type="button"
             label="Add Job"
-            class="p-button-secondary"
+            severity="secondary"
             (click)="addJob()"
             i18n-label="@@newJobForm.addJobButton"
             [disabled]="personStore.personUploadLoading()"
@@ -249,7 +249,7 @@
           <p-button
             type="button"
             label="Submit"
-            class="p-button-primary"
+            severity="primary"
             (click)="submitForm()"
             i18n-label="@@newJobForm.submitButton"
             [disabled]="personStore.personUploadLoading()"

@@ -77,8 +77,6 @@ export function validateOnServerError<T>(store: {
   setValidationErrors: (validationMap: ValidationFieldError[]) => void;
 }): OperatorFunction<T, T> {
   return catchError((err: HttpErrorResponse) => {
-    console.log('asd');
-
     if (
       err.status === 400 &&
       err.error &&

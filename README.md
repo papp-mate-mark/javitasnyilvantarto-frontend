@@ -17,7 +17,7 @@ Először a `npm install` segítségével telepítse a szükséges függőségek
 
 Először készitsen egy másolatot a `src/environments/environment.ts` fájlból `src/environments/environment.prod.ts` néven, majd módosítsa az `API_URL` és `WS_URL` értékét a tényleges domain címre.
 
-Utána a `ng build --localize` parancs segítségével lefordíthatja a projektet, ez létrehozza a `dist` könyvtárban a buildelt fájlokat. A --localize flag biztosítja, hogy a magyar nyelvű fordítás is elkészüljön.
+Utána a `ng build --configuration production --localize` parancs segítségével lefordíthatja a projektet, ez létrehozza a `dist` könyvtárban a buildelt fájlokat. A --localize flag biztosítja, hogy a magyar nyelvű fordítás is elkészüljön.
 
 A buildelt fájlokat egy tetszőleges webszerverre helyezve futtatható a frontend alkalmazás.
 

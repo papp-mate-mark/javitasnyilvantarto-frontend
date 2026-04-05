@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, input, model } from '@angular/core';
+import { Component, DestroyRef, inject, input, model, signal } from '@angular/core';
 import { SubmitDialog } from '../submit-dialog/submit-dialog';
 import DoneJobRowData from '../../model/done-job-row-data';
 import { DataTable } from '../data-table/data-table';
@@ -13,10 +13,15 @@ import { JobGroupStore } from '../../store/job-group.store';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { JobStore } from '../../store/job.store';
 import { serializeNullableDateToLocalOffsetString } from '../../helper/date-formatter';
+import { Dialog } from '../dialog/dialog';
+import { Button } from 'primeng/button';
+import { Severity } from '../../model/enums/severity';
+import { JobService } from '../../service/job.service';
+import { updateAndMarkInvalidDirty } from '../../helper/form-validation.helper';
 
 @Component({
   selector: 'app-set-job-group-to-pickedup-confirmation-dialog',
-  imports: [SubmitDialog, DataTable, DatePicker],
+  imports: [Dialog, DataTable, DatePicker, Button],
   templateUrl: './set-job-group-to-pickedup-confirmation-dialog.html',
   styleUrl: './set-job-group-to-pickedup-confirmation-dialog.scss',
 })
@@ -27,8 +32,14 @@ export class SetJobGroupToPickedupConfirmationDialog {
   readonly jobs = input<DoneJobRowData[]>([]);
   /**
    * Dialog visibility state.
+   */  
+  readonly dialogVisible = model.required<boolean>();  
+  /**
+   * Whether the save operation is in progress.
    */
-  readonly dialogVisible = model.required<boolean>();
+  readonly isSaving = signal(false);
+  
+  private readonly jobService = inject(JobService);
   readonly jobStore = inject(JobStore);
   private readonly jobGroupService = inject(JobGroupService);
   private readonly jobGroupStore = inject(JobGroupStore);
@@ -45,7 +56,41 @@ export class SetJobGroupToPickedupConfirmationDialog {
     ]),
   });
 
-  submitted() {
+  submitOne(){
+    this.isSaving.set(true);
+    updateAndMarkInvalidDirty(this.parentGroup);
+
+    this.jobService
+      .pickUpJob(
+        this.jobs()[0].id,
+        new JobPickedUp(
+          serializeNullableDateToLocalOffsetString(
+            this.parentGroup.controls['pickedUpDateControl'].value,
+          ),
+        ),
+      )
+      .pipe(
+        tap(() => {
+          this.dialogVisible.set(false);
+          this.jobGroupStore.setActiveJobsLoading(true);
+        }),
+        switchMap(() => this.jobGroupService.getActiveJobs()),
+        finalize(() => {
+          this.isSaving.set(false);
+          updateAndMarkInvalidDirty(this.parentGroup, true);
+        }),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe((value) => {
+        this.jobGroupStore.setActiveJobs(value);
+        this.jobGroupStore.setActiveJobsLoading(false);
+      });
+  }
+
+  submitAll() {
+    this.isSaving.set(true);
+    updateAndMarkInvalidDirty(this.parentGroup);
+
     this.jobGroupService
       .pickUpJobGroup(
         this.jobs()[0].groupId,
@@ -61,7 +106,10 @@ export class SetJobGroupToPickedupConfirmationDialog {
           this.jobGroupStore.setActiveJobsLoading(true);
         }),
         switchMap(() => this.jobGroupService.getActiveJobs()),
-        finalize(() => this.parentGroup.controls['pickedUpDateControl'].updateValueAndValidity()),
+        finalize(() => {
+          updateAndMarkInvalidDirty(this.parentGroup, true);
+          this.isSaving.set(false);
+        }),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((value) => {
@@ -69,4 +117,10 @@ export class SetJobGroupToPickedupConfirmationDialog {
         this.jobGroupStore.setActiveJobsLoading(false);
       });
   }
+  clearData(){
+    this.parentGroup.reset();
+  }
+  protected readonly closeSeverity = Severity.SECONDARY;
+  protected readonly saveOneSeverity = Severity.PRIMARY;
+  protected readonly saveAllSeverity = Severity.WARN;
 }

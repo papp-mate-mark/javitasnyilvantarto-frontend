@@ -18,7 +18,8 @@ const validationErrorMessages: Record<string, string> = {
   'validation.finishTime.requiredIfFinishNoteIsSet': $localize`:@@validationErrors.finishTimeRequiredIfFinishNoteIsSet:Finish time must be set if finish note is set.`,
   'validation.finishTime.requiredIfImagesAfterIsSet': $localize`:@@validationErrors.finishTimeRequiredIfImagesAfterIsSet:Finish time must be set if after images are uploaded.`,
   'validation.job.pickup.before.done': $localize`:@@validationErrors.jobPickupBeforeDone:Job cannot be picked up before it is done.`,
-  'validation.job.pickedup.before.done': $localize`:@@validationErrors.jobPickedupBeforeDone:Set pickup date is before the finish date.`,
+  'validation.job.pickedup.before.done': $localize`:@@validationErrors.jobPickedupBeforeDone:Some job was not finished at that time.`,
+  'validation.job.pickedup.before.bringedin': $localize`:@@validationErrors.jobPickedupBeforeBringedin:Set pickup date cannot be before the upload date.`,
 };
 
 export default class ValidationErrorTranslator {
