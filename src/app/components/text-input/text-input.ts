@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input, InputSignal } from '@angular/core';
 import { BaseReactiveForm } from '../../model/derictive/form/base-reactive-form';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -18,4 +18,9 @@ import { ScrollIntoViewOnFocusDirective } from '../../directive/scroll-into-view
   templateUrl: './text-input.html',
   styleUrl: './text-input.scss',
 })
-export class TextInput extends BaseReactiveForm {}
+export class TextInput extends BaseReactiveForm {
+  /**
+   * Native autocomplete hint used by browsers/password managers.
+   */
+  readonly autocomplete: InputSignal<string | undefined> = input();
+}

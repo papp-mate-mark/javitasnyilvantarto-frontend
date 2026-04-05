@@ -16,4 +16,8 @@ export class PasswordInput extends BaseReactiveForm {
    * Whether to show the "view password" toggle.
    */
   readonly feedback: InputSignal<boolean> = input(false);
+  /**
+   * Native autocomplete hint used by browsers/password managers.
+   */
+  readonly autocomplete: InputSignal<string | undefined> = input();
 }
