@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { finalize } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { toHttpParams } from '../helper/to-http-params';
 import ErrorMessage from '../model/error-message';
 import PageResponse from '../model/page-response';
@@ -12,6 +13,7 @@ import UserRegisterRequest from '../model/user-register-request';
 import { ApiService } from './api.service';
 import { validateOnServerError } from './form-validation';
 import { UserStore } from '../store/user.store';
+import { selectCurrentUser } from '../state/current-user.selector';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +21,7 @@ import { UserStore } from '../store/user.store';
 export class UserService {
   private readonly apiService = inject(ApiService);
   private readonly userStore = inject(UserStore);
+  private readonly store = inject(Store);
 
   listUsers(filterParams: UserFilterParams, pageable: Pageable) {
     this.userStore.setUsersLoading(true);
@@ -83,6 +86,8 @@ export class UserService {
   }
 
   resetOwnPassword(newPassword: string) {
+    const currentUser = this.store.selectSignal(selectCurrentUser)();
+
     return this.apiService
       .putReq<void>(
         `/users/me/password`,
@@ -90,7 +95,7 @@ export class UserService {
           $localize`:@@userService.resetOwnPasswordTitle:Change Password`,
           $localize`:@@userService.resetOwnPasswordFailed:Changing password failed`
         ),
-        new ResetOwnPasswordRequest(newPassword)
+        new ResetOwnPasswordRequest(newPassword, currentUser.refreshToken)
       )
       .pipe(validateOnServerError(this.userStore));
   }

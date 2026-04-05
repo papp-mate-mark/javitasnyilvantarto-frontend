@@ -1,3 +1,6 @@
 export default class ResetOwnPasswordRequest {
-  constructor(public newPassword: string) {}
+  constructor(
+    public newPassword: string,
+    public refreshToken: string
+  ) {}
 }
