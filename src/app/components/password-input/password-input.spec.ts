@@ -66,6 +66,14 @@ describe('PasswordInput', () => {
     expect(input.value).toBe(testValue);
   });
 
+  it('should pass autocomplete input to the native input element', () => {
+    fixture.componentRef.setInput('autocomplete', 'current-password');
+    fixture.detectChanges();
+
+    const input: HTMLInputElement = fixture.nativeElement.querySelector('input');
+    expect(input.getAttribute('autocomplete')).toBe('current-password');
+  });
+
   it('should emit searchChanged on input with debounce', fakeAsync(() => {
     const searchSpy = spyOn(component.searchChanged, 'emit');
     const testValue1 = 'first';
