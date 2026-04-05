@@ -2,6 +2,8 @@ const validationErrorMessages: Record<string, string> = {
   'generat-internal.server.error': $localize`:@@validationErrors.internalServerError:An internal server error occurred. Please try again later.`,
   'validation.email.invalid': $localize`:@@validationErrors.emailInvalid:The email address is not valid.`,
   'validation.required': $localize`:@@validationErrors.required:This field is required.`,
+  'validation.password.too.short': $localize`:@@validationErrors.passwordTooShort:Password must be at least 8 characters long.`,
+  'validation.password.mismatch': $localize`:@@validationErrors.passwordMismatch:The two password fields must match.`,
   'validation.finish.date.before.upload.date': $localize`:@@validationErrors.finishDateBeforeUploadDate:The finish date cannot be before the upload date.`,
   'validation.non.zero': $localize`:@@validationErrors.nonZero:Value can't be under zero.`,
   'validation.bringin.required': $localize`:@@validationErrors.bringinRequired:Bring-in date is required when finish date is set.`,

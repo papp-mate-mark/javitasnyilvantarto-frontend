@@ -1,10 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Route } from '@angular/router';
+import { Component, computed, inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import { MenubarModule } from 'primeng/menubar';
 import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
+import { PopoverModule } from 'primeng/popover';
 import { AuthenticationService } from '../../service/authentication.service';
 import { Store } from '@ngrx/store';
 import { checkAuthority } from '../../helper/authority-helper';
@@ -12,15 +13,18 @@ import { DarkModeSelector } from '../dark-mode-selector/dark-mode-selector';
 import { FormControl, FormGroup } from '@angular/forms';
 import { selectIsDarkMode } from '../../state/user-preferences.selector';
 import { UserPreferencesActions } from '../../state/user-preferences.actions';
+import { selectCurrentUser } from '../../state/current-user.selector';
+import { PageTitle } from '../../model/enums/PageTitle';
 
 @Component({
   selector: 'app-menubar',
   templateUrl: './menubar.html',
   standalone: true,
-  imports: [CommonModule, MenubarModule, RouterModule, ButtonModule, DarkModeSelector],
+  imports: [CommonModule, MenubarModule, RouterModule, ButtonModule, PopoverModule, DarkModeSelector],
 })
 export class Menubar implements OnInit {
   menuItems: MenuItem[] = [];
+  private readonly router = inject(Router);
   protected readonly authService = inject(AuthenticationService);
   protected readonly route = inject(ActivatedRoute);
   protected readonly store = inject(Store);
@@ -29,11 +33,16 @@ export class Menubar implements OnInit {
     darkModeControl: new FormControl<boolean>(false),
   });
 
+  protected readonly accountName = computed(() => {
+    const user = this.store.selectSignal(selectCurrentUser)();
+
+    return user.name ?? user.username;
+  });
+
   ngOnInit(): void {
     this.buildMenu();
     this.loadDarkModePreference();
-    this.subscribeToButtonChanges();
-  }
+    this.subscribeToButtonChanges();  }
 
   private loadDarkModePreference(): void {
     this.store.select(selectIsDarkMode).subscribe((isDarkMode) => {
@@ -112,5 +121,9 @@ export class Menubar implements OnInit {
 
   logout(): void {
     this.authService.logout();
+  }
+
+  onUserSettingsClick(): void {
+    this.router.navigate([PageTitle.USER_PAGE]);
   }
 }

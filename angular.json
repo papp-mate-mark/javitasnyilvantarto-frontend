@@ -33,13 +33,16 @@
             ],
             "styles": ["src/styles.scss"],
             "polyfills": ["zone.js", "@angular/localize/init"],
-            "allowedCommonJsDependencies": ["deepmerge", "lodash"]
+            "allowedCommonJsDependencies": [
+              "deepmerge",
+              "lodash"
+            ]
           },
           "configurations": {
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
+                  "replace": "src/environments/environments.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
               ],

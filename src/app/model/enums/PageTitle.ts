@@ -9,4 +9,5 @@ export enum PageTitle {
   USERS = 'users',
   SYSTEM_SETTINGS = 'system-settings',
   MIGRATION = 'migration',
+  USER_PAGE = 'user-page',
 }

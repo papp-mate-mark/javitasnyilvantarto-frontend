@@ -66,7 +66,7 @@ export class UserModificationDialog {
         {
           usernameControl: user.username,
           authoritiesControl: user.authorities ?? [],
-          nameControl: user.name,
+          nameControl: user.name ?? undefined,
         },
         { emitEvent: false },
       );

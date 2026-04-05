@@ -16,4 +16,4 @@
   [userToModify]="userToModify()"
   (passwordGenerated)="showPassword($event)"
 />
-<app-new-password-dialog [(dialogVisible)]="passwordDialogVisible" [password]="generatedPass()" />
+<app-new-password-display-dialog [(dialogVisible)]="passwordDialogVisible" [password]="generatedPass()" />

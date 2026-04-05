@@ -1,22 +1,46 @@
 <div class="w-full shadow-md">
   <p-menubar [model]="menuItems" class="rounded-none">
     <ng-template pTemplate="end">
-      <div class="flex gap-4">
-        <div class="p-menubar-link m-auto">
-          <app-dark-mode-selector
-            [parentGroup]="parentGroup"
-            controlName="darkModeControl"
-            id="darkModeSwitch"
+      <div class="p-menubar-item">
+        <div class="p-menubar-item-content">
+          <a
+            class="p-menubar-item-link"
+            tabindex="0"
+            (click)="accountPopover.toggle($event)"
+          >
+            <span class="p-menubar-item-label">{{accountName()}}</span>
+          </a>
+        </div>
+      </div>
+
+      <p-popover #accountPopover>
+        <div class="flex flex-col gap-3  ">
+          <div class="flex justify-end items-center w-full gap-2">
+            <span i18n="@@menubar.darkMode">Dark mode:</span>
+            <app-dark-mode-selector
+              [parentGroup]="parentGroup"
+              controlName="darkModeControl"
+              id="darkModeSwitch"
+            />
+          </div>
+
+          <p-button
+            type="button"
+            i18n-label="@@menubar.userSettings"
+            label="User settings"
+            fluid
+            (click)="onUserSettingsClick()"
+          />
+
+          <p-button
+            type="button"
+            i18n-label="@@menubar.logout"
+            label="Logout"
+            fluid
+            (click)="logout()"
           />
         </div>
-        <p-button
-          type="button"
-          i18n-label="@@menubar.logout"
-          label="Logout"
-          class="p-button-text text-gray-700 hover:text-red-500 transition"
-          (click)="logout()"
-        />
-      </div>
+      </p-popover>
     </ng-template>
   </p-menubar>
 </div>

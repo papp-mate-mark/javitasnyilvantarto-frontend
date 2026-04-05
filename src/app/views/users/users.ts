@@ -9,13 +9,13 @@ import { UserStore } from '../../store/user.store';
 import PageResponse from '../../model/page-response';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UserModificationDialog } from '../../components/user-modification-dialog/user-modification-dialog';
-import { NewPasswordDialog } from '../../components/new-password-dialog/new-password-dialog';
+import { NewPasswordDisplayDialog } from '../../components/new-password-display-dialog/new-password-display-dialog';
 import { AppConfirmationService } from '../../service/confirmation.service';
 import PasswordResponse from '../../model/password-response';
 
 @Component({
   selector: 'app-users',
-  imports: [UserTable, UserFilter, UserModificationDialog, NewPasswordDialog],
+  imports: [UserTable, UserFilter, UserModificationDialog, NewPasswordDisplayDialog],
   templateUrl: './users.html',
   styleUrl: './users.scss',
 })

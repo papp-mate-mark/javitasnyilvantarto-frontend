@@ -14,6 +14,7 @@ export const currentUserReducer = createReducer(
     const refreshTokenPayload = jwtDecode<JwtPayload>(loginResponse.tokens.refreshToken);
 
     return {
+      name: loginResponse.name,
       username: accessTokenPayload.sub,
       accessToken: loginResponse.tokens.accessToken,
       refreshToken: loginResponse.tokens.refreshToken,

@@ -100,6 +100,13 @@ export const routes: Routes = [
           requiredAuthority: UserAuthorites.MANAGE_MIGRATIONS,
         },
       },
+      {
+        path: PageTitle.USER_PAGE,
+        loadComponent: () => import('./views/user-page/user-page').then((m) => m.UserPage),
+        data: {
+          excludeFromMenu: true,          
+        },
+      },
     ],
   },
 ];

@@ -1,0 +1,8 @@
+<app-data-table
+  [columns]="columns"
+  [data]="refreshTokenStore.activeTokens()"
+  [paginated]="false"
+  [isLoading]="refreshTokenStore.activeTokensLoading()"
+  [rowActions]="rowActions"
+  [enforcePortrait]="true"
+/>

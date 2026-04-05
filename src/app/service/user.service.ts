@@ -5,6 +5,7 @@ import ErrorMessage from '../model/error-message';
 import PageResponse from '../model/page-response';
 import Pageable, { toPageableParams } from '../model/pageable';
 import PasswordResponse from '../model/password-response';
+import ResetOwnPasswordRequest from '../model/reset-own-password-request';
 import User from '../model/user';
 import UserFilterParams from '../model/user-filter-params';
 import UserRegisterRequest from '../model/user-register-request';
@@ -79,5 +80,18 @@ export class UserService {
       ),
       {}
     );
+  }
+
+  resetOwnPassword(newPassword: string) {
+    return this.apiService
+      .putReq<void>(
+        `/users/me/password`,
+        new ErrorMessage(
+          $localize`:@@userService.resetOwnPasswordTitle:Change Password`,
+          $localize`:@@userService.resetOwnPasswordFailed:Changing password failed`
+        ),
+        new ResetOwnPasswordRequest(newPassword)
+      )
+      .pipe(validateOnServerError(this.userStore));
   }
 }
