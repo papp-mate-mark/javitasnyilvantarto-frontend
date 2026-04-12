@@ -1,0 +1,127 @@
+<p-table
+  [value]="isLoading() ? [] : clonedData()"
+  [loading]="isLoading()"
+  [showLoader]="false"
+  [lazy]="isDataPaginated()"
+  (onPage)="onPageChanged($event)"
+  (onSort)="onSortChanged($event)"
+  [paginator]="paginated()"
+  [rowsPerPageOptions]="[1, 10, 20]"
+  [totalRecords]="totalRecords()"
+  [pageLinks]="pageButtonCount()"
+  sortMode="multiple"
+  [rows]="numberOfRows()"
+  [class]="
+    `${enforcePortrait() ? 'topBorderEnforced' : 'topBorder'} ${disabled() ? 'pointer-events-none opacity-70' : ''}`
+  "
+>
+  <ng-template pTemplate="header">
+    <tr>
+      @for (col of columns(); track $index) {
+        <th
+          [class]="
+            `${portrait(enforcePortrait(), 'max-md:hidden', 'hidden')} ${disabled() ? 'pointer-events-none opacity-60' : ''}`
+          "
+          [pSortableColumn]="col.key"
+          [pSortableColumnDisabled]="!col.sortable"
+        >
+          {{ col.label }}
+          @if (col.sortable) {
+            <p-sortIcon [field]="col.key" />
+          }
+        </th>
+      }
+      @for (action of rowActions(); track $index) {
+        <th
+          [class]="
+            `${portrait(enforcePortrait(), 'max-md:hidden', 'hidden')} ${disabled() ? 'pointer-events-none opacity-60' : ''} whitespace-nowrap`
+          "
+        >
+          {{ action.title }}
+        </th>
+      }
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-row>
+    <tr>
+      @for (col of columns(); track $index) {
+        <td
+          [class]="
+            `${enforcePortrait() ? 'block w-full' : 'max-md:block max-md:w-full'} 
+        ${rowActions().length + columns().length - 1 === $index ? (enforcePortrait() ? 'lastTdEnforced' : ' lastTd') : ''}`
+          "
+        >
+          <div [class]="`${enforcePortrait() ? '' : 'md:hidden'} mr-10 font-semibold`">
+            {{ col.label }}
+          </div>
+          <div>
+            @if (getTemplate(col.key); as tpl) {
+              <ng-container *ngTemplateOutlet="tpl; context: { $implicit: row }"></ng-container>
+            } @else if (row[col.key]) {
+              {{ row[col.key] }}
+            }
+          </div>
+        </td>
+      }
+      @for (action of rowActions(); track $index) {
+        <!-- width style = 1% is a workaround to prevent column from expanding -->
+        <td
+          [class]="
+            `${enforcePortrait() ? 'block w-full' : 'max-md:block max-md:w-full w-px whitespace-nowrap'} 
+        ${rowActions().length - 1 === $index ? (enforcePortrait() ? 'lastTdEnforced' : ' lastTd') : ''}`
+          "
+        >
+          <p-button
+            (onClick)="action.funct(row)"
+            [disabled]="disabled()"
+            styleClass="w-auto whitespace-nowrap"
+            [hasAuthority]="action.requiredAuthority"
+            >{{ action.title }}</p-button
+          >
+        </td>
+      }
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="loadingbody">
+    @for (row of [1, 2, 3, 4, 5]; track $index) {
+      <tr>
+        @for (col of columns(); track $index) {
+          <td
+            [class]="
+              `${enforcePortrait() ? 'block w-full' : 'max-md:block max-md:w-full'} 
+        ${columns().length - 1 === $index && rowActions().length === 0 ? (enforcePortrait() ? 'lastTdEnforced' : ' lastTd') : ''}`
+            "
+          >
+            <div [class]="`${enforcePortrait() ? '' : 'md:hidden'} mr-10 font-semibold`">
+              {{ col.label }}
+            </div>
+            <div>
+              <p-skeleton />
+            </div>
+          </td>
+        }
+        @for (action of rowActions(); track $index) {
+          <td
+            [class]="
+              `${enforcePortrait() ? 'block w-full' : 'max-md:block max-md:w-full'} 
+        ${rowActions().length - 1 === $index ? (enforcePortrait() ? 'lastTdEnforced' : ' lastTd') : ''} `
+            "
+            [style.width]="enforcePortrait() ? null : '1%'"
+          >
+            <p-button [disabled]="true">{{ action.title }}</p-button>
+          </td>
+        }
+      </tr>
+    }
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr class="noData">
+      <td [attr.colspan]="columns().length + rowActions().length" class="text-center">
+        <span i18n="@@dataTable.noDataMessage" class="flex justify-center">No data found.</span>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

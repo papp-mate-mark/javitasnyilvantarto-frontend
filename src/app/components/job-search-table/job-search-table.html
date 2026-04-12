@@ -1,0 +1,14 @@
+<p-card>
+  <app-data-table
+    [columns]="columns"
+    [data]="jobStore.jobs()"
+    [paginated]="true"
+    [isLoading]="jobStore.jobsLoading()"
+    (pageOptionsChange)="emitPageOptionsChanged($event)"
+    [rowActions]="rowActions"
+  >
+    <ng-template #done let-data>
+      {{ formatDate(data.done) }}
+    </ng-template></app-data-table
+  >
+</p-card>

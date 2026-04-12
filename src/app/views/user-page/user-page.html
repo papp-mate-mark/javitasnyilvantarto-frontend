@@ -1,0 +1,25 @@
+<div class="user-page">
+	<p-card styleClass="user-page__card">
+		<ng-template #title>
+			<span i18n="@@userPage.cardHeader">User settings</span>
+		</ng-template>
+
+		<div class="user-page__content">
+			<p-button
+				label="Change password"
+				i18n-label="@@userPage.changePasswordButton"
+				(click)="openNewPasswordDialog()"
+			/>
+
+			<h3 class="user-page__section-title" i18n="@@userPage.activeSessionsTitle">Active sessions</h3>
+			<app-refresh-token-table
+				(invalidatePressed)="openInvalidateTokenConfirmation($event)"
+			/>
+		</div>
+	</p-card>
+
+	<app-new-password-dialog
+		[(dialogVisible)]="newPasswordDialogVisible"
+		(passwordChanged)="fetchActiveTokens()"
+	/>
+</div>

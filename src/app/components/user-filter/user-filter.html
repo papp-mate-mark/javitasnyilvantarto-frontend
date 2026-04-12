@@ -1,0 +1,30 @@
+<p-card>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <app-text-input
+        id="nameSearch"
+        label="Name"
+        [fluid]="true"
+        i18n-label="@@userSearch.name"
+        controlName="searchNameControl"
+        [parentGroup]="parentGroup"
+        (searchChanged)="handleChange($event, 'name')"
+      />
+      <app-text-input
+        id="usernameSearch"
+        label="Username"
+        [fluid]="true"
+        i18n-label="@@userSearch.username"
+        controlName="searchUserNameControl"
+        [parentGroup]="parentGroup"
+        (searchChanged)="handleChange($event, 'username')"
+      />
+      <div class="flex items-center w-full md:justify-end">
+    <p-button
+      [hasAuthority]="createUserAuthority"
+      label="New User"
+      (click)="newUserCreatePressed.emit()"
+      i18n-label="@@userFilter.newUser"
+    />
+    </div>
+  </div>
+</p-card>

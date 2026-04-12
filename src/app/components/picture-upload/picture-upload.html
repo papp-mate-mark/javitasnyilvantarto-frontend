@@ -1,0 +1,13 @@
+<div class="grid gap-1" [formGroup]="parentGroup()">
+  <app-dynamic-skeleton [showSkeleton]="isLoading()">
+    <label [for]="id()">{{ label() }}</label>
+  </app-dynamic-skeleton>
+  <app-dynamic-skeleton [showSkeleton]="isLoading()">
+    <app-picture-upload-formelement [formControlName]="controlName()" />
+  </app-dynamic-skeleton>
+  <app-validation-feedback
+    [parentGroup]="parentGroup()"
+    [controlName]="controlName()"
+    [class.hidden]="isLoading()"
+  />
+</div>

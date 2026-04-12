@@ -1,0 +1,36 @@
+/* You can add global styles to this file, and also import other style files */
+@use 'tailwindcss';
+
+.has-authority-container {
+  display: inline-block;
+}
+
+.has-authority-disabled-wrapper {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-inline-size: 0;
+
+  // Keep layout as close as possible to the original element.
+  display: contents;
+}
+
+.has-authority-tooltip {
+  position: fixed;
+  z-index: 1000;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  white-space: nowrap;
+  pointer-events: none;
+
+  // Use theme primitives (PrimeNG / PrimeUIX CSS variables).
+  background: var(--surface-900);
+  color: var(--surface-0);
+  border: 1px solid var(--surface-700);
+  visibility: hidden;
+}
+.p-toast {
+  @apply md:w-100! sm:w-100! w-[calc(100vw-10vw)]!;
+}

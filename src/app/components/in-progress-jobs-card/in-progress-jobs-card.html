@@ -1,0 +1,21 @@
+<p-card i18n-header="@@inProgressJobs.title" header="Jobs in progress">
+  <div class="flex flex-col gap-4">
+    <!-- prettier-ignore -->
+    <span i18n="@@doneJobs.doneJobCountLabel">
+    {jobs().length, plural,
+      =0 {There are no jobs ready for pickup}
+      =1 {There is 1 jobs ready for pickup}
+      other {There are {{jobs().length}} jobs ready for pickup}
+    }
+    </span>
+    <app-data-table [columns]="columns" [data]="jobs()" [rowActions]="rowActions">
+      <ng-template #deadLine let-data>{{ formatDate(data.deadLine) }}</ng-template>
+      <ng-template #upload let-data>{{ formatDate(data.upload) }}</ng-template>
+    </app-data-table>
+  </div>
+</p-card>
+<app-set-to-done-dialog
+  [(dialogVisible)]="dialogVisible"
+  [jobId]="selectedJobId()"
+  [jobName]="selectedJobName()"
+/>

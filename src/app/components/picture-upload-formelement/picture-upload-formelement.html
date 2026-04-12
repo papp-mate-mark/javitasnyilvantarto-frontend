@@ -1,0 +1,30 @@
+<div class="container">
+  <input
+    #fileInput
+    class="fileInput"
+    type="file"
+    accept="image/*"
+    capture="environment"
+    (change)="handleFileInput($event)"
+    [disabled]="disabled()"
+  />
+
+  <div class="gallery">
+    @for (image of images(); track $index) {
+    <img
+      [src]="image.base64"
+      (click)="removeImage(image)"
+      (keydown.enter)="removeImage(image)"
+      (keydown.space)="$event.preventDefault(); removeImage(image)"
+      class="photo"
+      tabindex="0"
+      role="button"
+      [alt]="`#${image.id} Job image`"
+      i18n-alt="@@pictureUpload.imageAlt"
+    />
+    }
+    <p-button (onClick)="fileInput.click()" [disabled]="disabled()">
+      <ng-icon name="tablerPlus"></ng-icon>
+    </p-button>
+  </div>
+</div>

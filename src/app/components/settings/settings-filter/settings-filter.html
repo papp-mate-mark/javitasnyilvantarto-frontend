@@ -1,0 +1,10 @@
+<p-card>
+  <app-text-input
+    id="keySearch"
+    controlName="keySearchControl"
+    [parentGroup]="parentGroup"
+    (searchChanged)="handleChange($event, 'key')"
+    label="Key"
+    i18n-label="@@settings.filter.keyLabel"
+  />
+</p-card>

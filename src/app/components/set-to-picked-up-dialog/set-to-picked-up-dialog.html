@@ -1,0 +1,15 @@
+<app-submit-dialog
+  [(dialogVisible)]="dialogVisible"
+  [dialogTitle]="dialogTitle()"
+  (savePressed)="submit()"
+  width="25rem"
+>
+  <app-date-picker
+    id="pickedUpDate"
+    controlName="pickedUpDateControl"
+    i18n-label="@@setToPickedUpDialog.pickedUpDate"
+    label="Pickup date"
+    [parentGroup]="parentGroup"
+    [fluid]="true"
+  />
+</app-submit-dialog>

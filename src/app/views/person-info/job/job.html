@@ -1,0 +1,40 @@
+<div class="flex justify-center max-md:flex-col gap-4">
+  <div class="flex flex-col gap-4">
+    <app-person-data [person]="personStore.person()"></app-person-data>
+    @if (beforeImages().length) {
+      <p-card header="Images before" i18n-header="@@job.imagesBefore">
+        <app-job-image [imageIds]="beforeImages()" />
+      </p-card>
+    }
+    @if (afterImages().length) {
+      <p-card header="Images after" i18n-header="@@job.imagesAfter">
+        <app-job-image [imageIds]="afterImages()" />
+      </p-card>
+    }
+  </div>
+  <div class="flex flex-col gap-4">
+    <div class="flex gap-2 justify-center">
+      <p-button
+        (onClick)="printReceiptPressed()"
+        [disabled]="generating()"
+        i18n="@@job.printReceipt"
+        >Print receipt</p-button
+      >
+      <p-button
+        (onClick)="printSummaryPressed()"
+        [disabled]="generating()"
+        i18n="@@job.printSummary"
+        >Print Summary</p-button
+      >
+      <p-button
+        (onClick)="deleteJobPressed()"
+        i18n="@@job.delete"
+        [severity]="deleteSeverity"
+        [hasAuthority]="requiredDeleteAuthority"
+      >
+        Delete job
+      </p-button>
+    </div>
+    <app-job-info-table [person]="personStore.person()" [jobId]="jobId()" />
+  </div>
+</div>

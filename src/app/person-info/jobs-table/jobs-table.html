@@ -1,0 +1,13 @@
+<p-card header="Jobs" i18n-header="@@jobsTable.title">
+  <app-data-table [columns]="columns" [data]="data()" [rowActions]="rowActions">
+    <ng-template #bringedin let-data>
+      {{ formatDate(data.bringedin) }}
+    </ng-template>
+    <ng-template #pickup let-data>
+      {{ formatDate(data.pickup) }}
+    </ng-template>
+    <ng-template #status let-data>
+      <p-tag [severity]="getSeverity(data.status)" [value]="getTagValue(data.status)" />
+    </ng-template>
+  </app-data-table>
+</p-card>

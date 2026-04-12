@@ -1,0 +1,46 @@
+<div class="flex flex-col gap-4">
+  <p-button
+    label="Delete database"
+    i18n-label="@@migrations.deleteDb"
+    (onClick)="deleteDatabase()"
+    [disabled]="uploading() || selectedData()"
+  />
+  <p-button
+    label="Download database"
+    i18n-label="@@migrations.downloadDb"
+    (onClick)="downloadDatabase()"
+    [disabled]="uploading() || selectedData()"
+  />
+
+  <div class="flex gap-2">
+    <div>
+      <p-fileupload
+        mode="basic"
+        chooseIcon="pi pi-upload"
+        accept="application/json"
+        (uploadHandler)="uploadMigrationFile($event)"
+        [multiple]="true"
+        [auto]="true"
+        chooseLabel="Select file"
+        i18n-chooseLabel="@@migrations.selectFile"
+        [disabled]="uploading() || selectedData()"
+        [customUpload]="true"
+      />
+      @if (selectedData()) {
+        <p>{{ selectedData()?.length }} transfer requests</p>
+      }
+    </div>
+    <p-button
+      label="Clear file"
+      i18n-label="@@migrations.clearFile"
+      (onClick)="clearSelectedFile()"
+      [disabled]="disableButtons()"
+    />
+    <p-button
+      label="Upload file"
+      i18n-label="@@migrations.uploadFile"
+      (onClick)="uploadFile()"
+      [disabled]="disableButtons()"
+    />
+  </div>
+</div>

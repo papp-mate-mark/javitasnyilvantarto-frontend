@@ -1,0 +1,10 @@
+<p-card>
+  <app-data-table
+    [columns]="columns"
+    [data]="userStore.users()"
+    [loading]="userStore.usersLoading()"
+    [rowActions]="rowActions"
+    (pageOptionsChange)="pageOptionChanged.emit($event)"
+    [paginated]="true"
+  ></app-data-table>
+</p-card>

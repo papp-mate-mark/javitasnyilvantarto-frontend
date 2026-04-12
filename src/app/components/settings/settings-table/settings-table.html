@@ -1,0 +1,13 @@
+<p-card>
+  <app-data-table
+    [columns]="columns"
+    [data]="settingsStore.settings()"
+    [rowActions]="rowActions"
+    (pageOptionsChange)="pageOptionsChange.emit($event)"
+    [paginated]="true"
+  >
+    <ng-template #descriptionKey let-data>
+      {{ translateDescription(data.descriptionKey) }}
+    </ng-template>
+  </app-data-table>
+</p-card>

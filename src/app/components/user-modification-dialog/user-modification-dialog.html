@@ -1,0 +1,43 @@
+<app-submit-dialog
+  [(dialogVisible)]="dialogVisible"
+  [dialogTitle]="dialogTitle()"
+  (shown)="onDialogShown()"
+  (hidden)="onDialogHidden()"
+  (savePressed)="submit()"
+>
+  <div>
+    <app-text-input
+      id="username"
+      label="Username"
+      controlName="usernameControl"
+      i18n-label="@@userModification.usernameLabel"
+      fieldClasses="w-fit"
+      [fluid]="true"
+      [parentGroup]="parentGroup"
+    />
+    <app-text-input
+      id="name"
+      label="Name"
+      controlName="nameControl"
+      i18n-label="@@userModification.nameLabel"
+      fieldClasses="w-fit"
+      [fluid]="true"
+      [parentGroup]="parentGroup"
+    />
+    <div>
+      <app-multiselect
+        id="authorities"
+        label="Authorities"
+        controlName="authoritiesControl"
+        i18n-label="@@userModification.authoritiesLabel"
+        placeholder="Select Authorities"
+        i18n-placeholder="@@userModification.authoritiesPlaceholder"
+        [parentGroup]="parentGroup"
+        [options]="availableAuthorities"
+        [fluid]="true"
+        optionLabel="label"
+        optionValue="value"
+      />
+    </div>
+  </div>
+</app-submit-dialog>
