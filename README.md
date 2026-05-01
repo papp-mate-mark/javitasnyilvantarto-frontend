@@ -7,6 +7,7 @@ A szükséges backend itt érhető el: https://github.com/papp-mate-mark/javitas
 <h3>Előkövetelmények</h3>
 
 - [Node.js](https://nodejs.org/en)
+- [Angular CLI](https://angular.dev/installation)
 - [Backend szerver](https://github.com/papp-mate-mark/javitasnyilvantarto)
 
 <h3>Fejlesztő/debug szerver indítása</h3>
