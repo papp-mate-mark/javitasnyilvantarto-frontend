@@ -6,8 +6,8 @@ import { AuthenticationService } from '../../service/authentication.service';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CurrentUserApiActions } from '../../state/current-user.actions';
-import { TextInput } from '../text-input/text-input';
-import { PasswordInput } from '../password-input/password-input';
+import { TextInput } from '../../components/text-input/text-input';
+import { PasswordInput } from '../../components/password-input/password-input';
 import { Router } from '@angular/router';
 import { PageTitle } from '../../model/enums/PageTitle';
 

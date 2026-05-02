@@ -2,8 +2,8 @@ import { Component, DestroyRef, inject, OnDestroy, OnInit } from '@angular/core'
 import { JobGroupService } from '../../service/job-group.service';
 import { JobGroupStore } from '../../store/job-group.store';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DoneJobsCard } from '../done-jobs-card/done-jobs-card';
-import { InProgressJobsCard } from '../in-progress-jobs-card/in-progress-jobs-card';
+import { DoneJobsCard } from '../../components/done-jobs-card/done-jobs-card';
+import { InProgressJobsCard } from '../../components/in-progress-jobs-card/in-progress-jobs-card';
 import WSService from '../../service/ws-service';
 import { Client, IMessage } from '@stomp/stompjs';
 import WSResponse from '../../model/ws-response';

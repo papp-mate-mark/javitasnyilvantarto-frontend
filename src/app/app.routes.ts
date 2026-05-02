@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { PageTitle } from './model/enums/PageTitle';
-import { Login } from './components/login/login';
+import { Login } from './views/login/login';
 import { loginGuard } from './guard/login.guard';
 import { loggedOutGuard } from './guard/logged-out.guard';
 import { UserAuthorites } from './model/user-autorities';
@@ -15,7 +15,7 @@ export const routes: Routes = [
   {
     path: '',
     canActivate: [loginGuard, authorityGuard],
-    loadComponent: () => import('./components/menubar/menubar').then((m) => m.Menubar),
+    loadComponent: () => import('./views/menubar/menubar').then((m) => m.Menubar),
     children: [
       {
         path: '',
@@ -25,7 +25,7 @@ export const routes: Routes = [
       {
         path: PageTitle.ACTIVE_JOBS,
         loadComponent: () =>
-          import('./components/active-jobs/active-jobs').then((m) => m.ActiveJobs),
+          import('./views/active-jobs/active-jobs').then((m) => m.ActiveJobs),
         data: {
           label: $localize`:@@menu.activeJobs:Active Jobs`,
         },

@@ -9,7 +9,7 @@ import { PopoverModule } from 'primeng/popover';
 import { AuthenticationService } from '../../service/authentication.service';
 import { Store } from '@ngrx/store';
 import { checkAuthority } from '../../helper/authority-helper';
-import { DarkModeSelector } from '../dark-mode-selector/dark-mode-selector';
+import { DarkModeSelector } from '../../components/dark-mode-selector/dark-mode-selector';
 import { FormControl, FormGroup } from '@angular/forms';
 import { selectIsDarkMode } from '../../state/user-preferences.selector';
 import { UserPreferencesActions } from '../../state/user-preferences.actions';
