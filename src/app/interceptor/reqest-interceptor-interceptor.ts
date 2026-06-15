@@ -42,7 +42,7 @@ export const requestInterceptor: HttpInterceptorFn = (req, next) => {
                 return next(refreshedClone);
               }),
               catchError((refreshError) => {
-                if (refreshError.status === 401) {
+                if (refreshError.status === 401 || refreshError.status === 403) {
                   authService.clearTokenAndRedirect();
                 }
 
@@ -69,7 +69,7 @@ export const requestInterceptor: HttpInterceptorFn = (req, next) => {
         return next(cloned);
       }),
       catchError((error) => {
-        if (error.status === 401) {
+        if (error.status === 401 || error.status === 403) {
           authService.clearTokenAndRedirect();
 
           return EMPTY;
