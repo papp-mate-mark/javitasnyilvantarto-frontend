@@ -1,11 +1,11 @@
 <p-card i18n-header="@@inProgressJobs.title" header="Jobs in progress">
   <div class="flex flex-col gap-4">
     <!-- prettier-ignore -->
-    <span i18n="@@doneJobs.doneJobCountLabel">
+    <span i18n="@@inProgressJobs.inProgressJobCountLabel">
     {jobs().length, plural,
-      =0 {There are no jobs ready for pickup}
-      =1 {There is 1 jobs ready for pickup}
-      other {There are {{jobs().length}} jobs ready for pickup}
+      =0 {There are no jobs to be repaired}
+      =1 {There is 1 job to be repaired}
+      other {There are {{jobs().length}} jobs to be repaired}
     }
     </span>
     <app-data-table [columns]="columns" [data]="jobs()" [rowActions]="rowActions">
