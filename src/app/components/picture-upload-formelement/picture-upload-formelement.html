@@ -11,17 +11,40 @@
 
   <div class="gallery">
     @for (image of images(); track $index) {
-    <img
-      [src]="image.base64"
-      (click)="removeImage(image)"
-      (keydown.enter)="removeImage(image)"
-      (keydown.space)="$event.preventDefault(); removeImage(image)"
-      class="photo"
-      tabindex="0"
-      role="button"
-      [alt]="`#${image.id} Job image`"
-      i18n-alt="@@pictureUpload.imageAlt"
-    />
+      <div class="photoWrapper">
+        <img
+          [src]="image.base64"
+          (click)="removeImage(image)"
+          (keydown.enter)="removeImage(image)"
+          (keydown.space)="$event.preventDefault(); removeImage(image)"
+          class="photo"
+          [class.loading]="image.id === null"
+          tabindex="0"
+          role="button"
+          [alt]="`#${image.id} Job image`"
+          i18n-alt="@@pictureUpload.imageAlt"
+        />
+        @if (image.id === null) {
+          <div class="spinnerOverlay">
+            <svg class="spinner" viewBox="0 0 24 24" fill="none">
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="3"
+                opacity="0.25"
+              />
+              <path
+                d="M12 2a10 10 0 0 1 10 10"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+        }
+      </div>
     }
     <p-button (onClick)="fileInput.click()" [disabled]="disabled()">
       <ng-icon name="tablerPlus"></ng-icon>

@@ -10,17 +10,55 @@
   gap: 10px;
 }
 
+.photoWrapper {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
 .photo {
   width: 120px;
   height: 120px;
   object-fit: cover;
   border-radius: 8px;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    filter 0.3s ease;
 }
 
 .photo:hover {
   transform: scale(1.05);
+}
+
+.photo.loading {
+  filter: blur(4px);
+  cursor: default;
+}
+
+.spinnerOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  color: #fff;
+  animation: spin 0.8s linear infinite;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 .fileInput {
   display: none;

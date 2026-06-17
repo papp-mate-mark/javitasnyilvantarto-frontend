@@ -7,7 +7,7 @@ import { currentUserReducer } from '../../state/current-user.reducer';
 import { provideRouter } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { JobImageService } from '../../service/job-image.service';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import ImageWithId from '../../model/image-with-id';
 
 describe('PictureUploadFormelement', () => {
@@ -95,5 +95,143 @@ describe('PictureUploadFormelement', () => {
     expect(TestBed.inject(JobImageService).deleteImage).toHaveBeenCalledWith(idToDelete!);
     const imagesAfterDelete = fixture.nativeElement.querySelectorAll('img.photo');
     expect(imagesAfterDelete.length).toBe(1);
+  });
+
+  it('should show loading class and spinner while image is uploading', async () => {
+    const uploadSubject = new Subject<number>();
+    spyOn(TestBed.inject(JobImageService), 'uploadImage').and.returnValue(uploadSubject);
+    spyOn(component, 'toBase64').and.returnValue(Promise.resolve('data:image/png;base64,ZmFrZQ=='));
+
+    const fileInput: HTMLInputElement = fixture.nativeElement.querySelector('input[type="file"]');
+    const file = new File(['content'], 'image.png', { type: 'image/png' });
+
+    Object.defineProperty(fileInput, 'files', {
+      value: [file],
+      configurable: true,
+    });
+    fileInput.dispatchEvent(new Event('change'));
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // While uploading (id is null), the loading class and spinner overlay should be present
+    const photo = fixture.nativeElement.querySelector('img.photo');
+    expect(photo).toBeTruthy();
+    expect(photo.classList).toContain('loading');
+
+    const wrapper = photo.closest('.photoWrapper');
+    expect(wrapper).toBeTruthy();
+    expect(wrapper.querySelector('.spinnerOverlay')).toBeTruthy();
+    expect(wrapper.querySelector('svg.spinner')).toBeTruthy();
+  });
+
+  it('should remove loading class and spinner after upload completes', async () => {
+    const uploadSubject = new Subject<number>();
+    spyOn(TestBed.inject(JobImageService), 'uploadImage').and.returnValue(uploadSubject);
+    spyOn(component, 'toBase64').and.returnValue(Promise.resolve('data:image/png;base64,ZmFrZQ=='));
+
+    const fileInput: HTMLInputElement = fixture.nativeElement.querySelector('input[type="file"]');
+    const file = new File(['content'], 'image.png', { type: 'image/png' });
+
+    Object.defineProperty(fileInput, 'files', {
+      value: [file],
+      configurable: true,
+    });
+    fileInput.dispatchEvent(new Event('change'));
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // Complete the upload
+    uploadSubject.next(42);
+    uploadSubject.complete();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // After upload, loading class and spinner should be gone
+    const photo = fixture.nativeElement.querySelector('img.photo');
+    expect(photo).toBeTruthy();
+    expect(photo.classList).not.toContain('loading');
+
+    const spinner = fixture.nativeElement.querySelector('.spinnerOverlay');
+    expect(spinner).toBeFalsy();
+  });
+
+  it('should remove image and spinner on upload error', async () => {
+    const uploadSubject = new Subject<number>();
+    spyOn(TestBed.inject(JobImageService), 'uploadImage').and.returnValue(uploadSubject);
+    spyOn(component, 'toBase64').and.returnValue(Promise.resolve('data:image/png;base64,ZmFrZQ=='));
+
+    const fileInput: HTMLInputElement = fixture.nativeElement.querySelector('input[type="file"]');
+    const file = new File(['content'], 'image.png', { type: 'image/png' });
+
+    Object.defineProperty(fileInput, 'files', {
+      value: [file],
+      configurable: true,
+    });
+    fileInput.dispatchEvent(new Event('change'));
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('img.photo')).toBeTruthy();
+
+    // Simulate what catchError does on upload failure: remove images with null id
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (component as any).images.update((imgs: ImageWithId[]) =>
+      imgs.filter((i: ImageWithId) => i.id !== null),
+    );
+    fixture.detectChanges();
+
+    // Image and spinner should be gone
+    expect(fixture.nativeElement.querySelector('img.photo')).toBeFalsy();
+    expect(fixture.nativeElement.querySelector('.spinnerOverlay')).toBeFalsy();
+  });
+
+  it('should not delete an image while it is still uploading', async () => {
+    const uploadSubject = new Subject<number>();
+    spyOn(TestBed.inject(JobImageService), 'uploadImage').and.returnValue(uploadSubject);
+    spyOn(component, 'toBase64').and.returnValue(Promise.resolve('data:image/png;base64,ZmFrZQ=='));
+
+    const fileInput: HTMLInputElement = fixture.nativeElement.querySelector('input[type="file"]');
+    const file = new File(['content'], 'image.png', { type: 'image/png' });
+
+    Object.defineProperty(fileInput, 'files', {
+      value: [file],
+      configurable: true,
+    });
+    fileInput.dispatchEvent(new Event('change'));
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // Image is present and in loading state
+    let photo = fixture.nativeElement.querySelector('img.photo');
+    expect(photo).toBeTruthy();
+    expect(photo.classList).toContain('loading');
+
+    // Click the uploading image — should be ignored
+    photo.dispatchEvent(new Event('click'));
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // Image should still be there
+    photo = fixture.nativeElement.querySelector('img.photo');
+    expect(photo).toBeTruthy();
+
+    // Now complete the upload
+    uploadSubject.next(42);
+    uploadSubject.complete();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // Loading class should be gone
+    photo = fixture.nativeElement.querySelector('img.photo');
+    expect(photo).toBeTruthy();
+    expect(photo.classList).not.toContain('loading');
+
+    // Now clicking should delete it
+    spyOn(TestBed.inject(JobImageService), 'deleteImage').and.returnValue(of(void 0));
+    photo.dispatchEvent(new Event('click'));
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('img.photo')).toBeFalsy();
   });
 });

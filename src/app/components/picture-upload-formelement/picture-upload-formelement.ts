@@ -74,19 +74,15 @@ export class PictureUploadFormelement implements ControlValueAccessor {
   // Remove an image when clicked
   removeImage(img: ImageWithId) {
     if (this.disabled()) return;
+    if (img.id === null) return; // Don't allow deleting images that are still uploading
 
-    if (img.id !== null) {
-      this.imageService
-        .deleteImage(img.id)
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe(() => {
-          this.images.update((imgs) => imgs.filter((i) => i !== img));
-          this.onChange(this.images());
-        });
-    } else {
-      this.images.update((imgs) => imgs.filter((i) => i !== img));
-      this.onChange(this.images());
-    }
+    this.imageService
+      .deleteImage(img.id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.images.update((imgs) => imgs.filter((i) => i !== img));
+        this.onChange(this.images());
+      });
 
     this.onTouched();
   }
