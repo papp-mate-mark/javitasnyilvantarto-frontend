@@ -86,6 +86,10 @@ export class DataTable<T> implements AfterContentInit {
   protected readonly clonedData = computed(() => {
     const data = this.data();
 
+    if (!data) {
+      return [];
+    }
+
     if (Array.isArray(data)) {
       return data;
     } else {
@@ -96,6 +100,10 @@ export class DataTable<T> implements AfterContentInit {
   protected readonly totalRecords = computed(() => {
     const data = this.data();
 
+    if (!data) {
+      return 0;
+    }
+
     if (Array.isArray(data)) {
       return data.length;
     } else {
@@ -105,6 +113,10 @@ export class DataTable<T> implements AfterContentInit {
 
   protected readonly numberOfRows = computed(() => {
     const data = this.data();
+
+    if (!data) {
+      return 0;
+    }
 
     if (Array.isArray(data)) {
       return data.length;
