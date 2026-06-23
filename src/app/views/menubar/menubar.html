@@ -1,5 +1,5 @@
 <div class="w-full shadow-md">
-  <p-menubar [model]="menuItems" class="rounded-none">
+  <p-menubar [model]="menuItems()" class="rounded-none">
     <ng-template pTemplate="end">
       <div class="p-menubar-item">
         <div class="p-menubar-item-content">
@@ -7,14 +7,15 @@
             class="p-menubar-item-link"
             tabindex="0"
             (click)="accountPopover.toggle($event)"
+            (keydown.enter)="accountPopover.toggle($event)"
           >
-            <span class="p-menubar-item-label">{{accountName()}}</span>
+            <span class="p-menubar-item-label">{{ accountName() }}</span>
           </a>
         </div>
       </div>
 
       <p-popover #accountPopover>
-        <div class="flex flex-col gap-3  ">
+        <div class="flex flex-col gap-3">
           <div class="flex justify-end items-center w-full gap-2">
             <span i18n="@@menubar.darkMode">Dark mode:</span>
             <app-dark-mode-selector

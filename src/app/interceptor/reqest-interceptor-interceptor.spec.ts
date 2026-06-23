@@ -83,9 +83,7 @@ describe('reqestInterceptorInterceptor', () => {
       const refreshReq = httpTesting.expectOne(environment.API_URL + environment.REFRESH_ENDPOINT);
       expect(refreshReq.request.method).toBe('POST');
       expect(refreshReq.request.body).toBe('mockRefreshToken');
-      refreshReq.flush(
-        new LoginResponse([], new TokenResponse('newAccessToken', 'newRefreshToken')),
-      );
+      refreshReq.flush(new LoginResponse(new TokenResponse('newAccessToken', 'newRefreshToken')));
 
       const retriedReq = httpTesting.expectOne(TEST_URL);
       expect(retriedReq.request.headers.get(HttpHeader.AUTHORIZATION)).toBe(
@@ -155,9 +153,7 @@ describe('reqestInterceptorInterceptor', () => {
       const refreshReq = httpTesting.expectOne(environment.API_URL + environment.REFRESH_ENDPOINT);
       expect(refreshReq.request.method).toBe('POST');
       expect(refreshReq.request.body).toBe('mockRefreshToken');
-      refreshReq.flush(
-        new LoginResponse([], new TokenResponse('newAccessToken', 'newRefreshToken')),
-      );
+      refreshReq.flush(new LoginResponse(new TokenResponse('newAccessToken', 'newRefreshToken')));
 
       const req = httpTesting.expectOne(TEST_URL);
       expect(req.request.headers.get(HttpHeader.AUTHORIZATION)).toBe('Bearer newAccessToken');

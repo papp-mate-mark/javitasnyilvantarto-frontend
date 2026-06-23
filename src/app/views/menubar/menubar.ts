@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, Signal } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { CommonModule } from '@angular/common';
@@ -20,10 +20,16 @@ import { PageTitle } from '../../model/enums/PageTitle';
   selector: 'app-menubar',
   templateUrl: './menubar.html',
   standalone: true,
-  imports: [CommonModule, MenubarModule, RouterModule, ButtonModule, PopoverModule, DarkModeSelector],
+  imports: [
+    CommonModule,
+    MenubarModule,
+    RouterModule,
+    ButtonModule,
+    PopoverModule,
+    DarkModeSelector,
+  ],
 })
 export class Menubar implements OnInit {
-  menuItems: MenuItem[] = [];
   private readonly router = inject(Router);
   protected readonly authService = inject(AuthenticationService);
   protected readonly route = inject(ActivatedRoute);
@@ -39,10 +45,26 @@ export class Menubar implements OnInit {
     return user.name ?? user.username;
   });
 
+  protected readonly menuItems: Signal<MenuItem[]> = computed(() => {
+    const parentRoute = this.route.routeConfig;
+    if (!parentRoute?.children) return [];
+
+    return parentRoute.children
+      .filter(
+        (route) =>
+          !route.data?.['excludeFromMenu'] &&
+          (!route.data?.['requiredAuthority'] ||
+            (route.data?.['requiredAuthority'] &&
+              checkAuthority(this.store, route.data?.['requiredAuthority']))),
+      )
+      .map((route) => this.createMenuItem(route))
+      .filter((item) => item !== null) as MenuItem[];
+  });
+
   ngOnInit(): void {
-    this.buildMenu();
     this.loadDarkModePreference();
-    this.subscribeToButtonChanges();  }
+    this.subscribeToButtonChanges();
+  }
 
   private loadDarkModePreference(): void {
     this.store.select(selectIsDarkMode).subscribe((isDarkMode) => {
@@ -70,22 +92,6 @@ export class Menubar implements OnInit {
         element.classList.remove('my-app-dark');
       }
     }
-  }
-
-  private buildMenu(): void {
-    const parentRoute = this.route.routeConfig;
-    if (!parentRoute?.children) return;
-
-    this.menuItems = parentRoute.children
-      .filter(
-        (route) =>
-          !route.data?.['excludeFromMenu'] &&
-          (!route.data?.['requiredAuthority'] ||
-            (route.data?.['requiredAuthority'] &&
-              checkAuthority(this.store, route.data?.['requiredAuthority']))),
-      )
-      .map((route) => this.createMenuItem(route))
-      .filter((item) => item !== null) as MenuItem[];
   }
 
   private createMenuItem(route: Route): MenuItem | null {
